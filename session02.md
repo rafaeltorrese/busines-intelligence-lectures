@@ -107,7 +107,11 @@ Ir a Books https://books.toscrape.com/
 2. $x('//div[@class="col-sm-6 product_main"]/p[@class="instock availability"]/text()').map(x => x.wholeText)
 
 # Project
-https://www.larepublica.co/empresas/segunda-edicion-de-la-feria-de-carros-usados-de-automoviles-abondano-sera-el-domingo-3219575
+- URL
+    : https://www.larepublica.co/
+- https://www.larepublica.co/robots.txt
+- https://www.larepublica.co/empresas/segunda-edicion-de-la-feria-de-carros-usados-de-automoviles-abondano-sera-el-domingo-3219575
+
 1. $x('//h2[@data-h="16"]/a/@href').map(x => x.value)
 2. Guardar en archivo xpath.txt la siguiente expresión
   - Links = //h2[@data-h="16"]/a/@href
@@ -121,8 +125,18 @@ https://www.larepublica.co/empresas/segunda-edicion-de-la-feria-de-carros-usados
   - Cuerpo = //div[@class="html-content"]/p[not(@class)]/text()
 
 # Python
+
+## Virtual Environment
+- python base
+    : python -m venv venv
+- anaconda
+    : conda create --name myenv
+
 1. import requests
 2. import lxml.html as html
 3. import autopep8
 
-
+LINKS = //div[@class="news V_Title_Img"]/a/@href
+TITLE = //h2[@data-h="45"]/span/text()
+SUMMARY = //div[@class="lead"]/p/text()
+BODY = //div[@class="html-content"]/p/text()
