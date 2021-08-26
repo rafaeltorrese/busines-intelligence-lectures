@@ -2,3 +2,4 @@
 *.Rhistory
 venv
 *.code-workspace
+2021-*
