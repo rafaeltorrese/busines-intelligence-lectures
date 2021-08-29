@@ -10,7 +10,7 @@ XPATH_LINK_TO_ARTICLE = '//div[@class="news V_Title_Img"]/a/@href'
 # XPATH_TITLE = '//div[@data-epica-module-name="Contenido"]//div[@class="mb-auto"]/node()'  #
 
 # XPATH_TITLE = '//div[@data-epica-module-name="Contenido"]//div[@class="mb-auto"]/text-fill/span/text()'
-# XPATH_TITLE = '//text-fill/span/text()'
+XPATH_TITLE = '//text-fill/span/text()'
 
 # XPATH_TITLE = '//*[@id="vue-container"]/div[3]/div[1]/div[2]/div[1]/text-fill/span/text()'  # ok
 # XPATH_TITLE = '//*[@id="vue-container"]/div[3]/div[1]/div[2]/div[1]/h2/span/text()'  # NOP (COPY AND PASTE FROM CONTEXTUAL MENU)
