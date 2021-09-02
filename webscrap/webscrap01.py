@@ -46,16 +46,17 @@ s = BeautifulSoup(p12.text, 'lxml')
 
 #%% [markdown]
 # # EXTRACT INFO
-
+#%%
 sections = s.find('ul', 
             attrs={
                 'class': "horizontal-list main-sections hide-on-dropdown"}).find_all('li')
+print(sections)
 # %%
-# print(sections[0])
+print(sections[0])
 
 section = sections[0]
 
-# print(section)
+print(section)
 
 print(section.find('a'))
 
@@ -84,14 +85,14 @@ print()
 article_list = s_sec.find_all('h4', attrs={'class':"is-display-inline title-list"})
 
 
-# pprint(article_list)
+pprint(article_list)
 # print(len(article_list))
 
-# print(url+article_list[0].a.get('href'))
+print(url+article_list[0].a.get('href'))
 
 article_links = [f"{url}{article.a.get('href')}" for article in article_list]
-# print(len(article_links))
-# print(article_links)
+print(len(article_links))
+print(article_links)
 
 
 # print(my_links_section(url, s_sec))
@@ -128,3 +129,4 @@ try:
         
 except Error as e:
     print(f'Error {e}', '\n')
+# %%
