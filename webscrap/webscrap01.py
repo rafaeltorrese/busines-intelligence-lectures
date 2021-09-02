@@ -57,7 +57,7 @@ section = sections[0]
 
 # print(section)
 
-# print(section.find('a'))
+print(section.find('a'))
 
 # print(section.a)
 
@@ -95,7 +95,7 @@ article_links = [f"{url}{article.a.get('href')}" for article in article_list]
 
 
 # print(my_links_section(url, s_sec))
-print(get_notes(url, s_sec))
+# print(get_notes(url, s_sec))
 
 
 #%% [markdown]
