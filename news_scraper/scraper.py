@@ -5,7 +5,7 @@ import requests
 import lxml.html as html
 
 URL_HOME = 'https://www.larepublica.co/'
-XPATH_LINK_TO_ARTICLE = '//div[@class="news V_Title_Img"]/a/@href'
+XPATH_LINK_TO_ARTICLE = '//div[@class="news V_Title_Img"]/a[1]/@href'
 XPATH_TITLE = '//text-fill/span/text()'
 XPATH_SUMMARY = '//div[@class="lead"]/p/text()'
 XPATH_BODY = '//div[@class="html-content"]/p/text()'
