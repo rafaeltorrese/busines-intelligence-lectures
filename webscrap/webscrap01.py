@@ -1,20 +1,25 @@
-#%%
+# %%
+from IPython.display import Image
 import requests
 from bs4 import BeautifulSoup
 from pprint import pprint
 
 from auxfunc import get_notes
-#%%
+# %%
+
 
 def my_links_section(url, section):
     featured_article = section.find('section', attrs={'class': "top-content"})
     featured_article_link = url+featured_article.a.get('href')
-    article_list = section.find_all('h4', attrs={'class':"is-display-inline title-list"})
-    article_links =  [featured_article_link] + [f"{url}{article.a.get('href')}" for article in article_list]
+    article_list = section.find_all(
+        'h4', attrs={'class': "is-display-inline title-list"})
+    article_links = [featured_article_link] + \
+        [f"{url}{article.a.get('href')}" for article in article_list]
 
-    return  article_links
+    return article_links
 
-#%%
+
+# %%
 url = 'https://www.pagina12.com.ar'
 
 
@@ -33,23 +38,23 @@ p12 = requests.get(url)
 
 # print(p12.request.method)
 
-print(p12.request.url)  #  
+print(p12.request.url)
 
 s = BeautifulSoup(p12.text, 'lxml')
 # print(type(s))
-#%%
+# %%
 # print(s.prettify())
 # %%
 # print(s.find('ul'))  # first element
 
 # print(s.find('ul', attrs={'class': "horizontal-list main-sections hide-on-dropdown"}).find_all('li'))
 
-#%% [markdown]
+# %% [markdown]
 # # EXTRACT INFO
-#%%
-sections = s.find('ul', 
-            attrs={
-                'class': "horizontal-list main-sections hide-on-dropdown"}).find_all('li')
+# %%
+sections = s.find('ul',
+                  attrs={
+                      'class': "horizontal-list main-sections hide-on-dropdown"}).find_all('li')
 print(sections)
 # %%
 print(sections[0])
@@ -82,25 +87,27 @@ featured_article = s_sec.find('section', attrs={'class': "top-content"})
 print()
 # print(url+featured_article.a.get('href'))
 
-article_list = s_sec.find_all('h4', attrs={'class':"is-display-inline title-list"})
-
+# %%
+article_list = s_sec.find_all(
+    'h4', attrs={'class': "is-display-inline title-list"})
 
 pprint(article_list)
 # print(len(article_list))
-
+# %%
 print(url+article_list[0].a.get('href'))
 
 article_links = [f"{url}{article.a.get('href')}" for article in article_list]
 print(len(article_links))
 print(article_links)
-
+print(len(article_links))
 
 # print(my_links_section(url, s_sec))
 # print(get_notes(url, s_sec))
 
 
-#%% [markdown]
+# %% [markdown]
 # ## Exceptions
+# %%
 r = requests.get(url)
 print(r)
 
@@ -118,15 +125,57 @@ except Exception as e:
     print(e, '\n')
 
 note_list = get_notes(url, s_sec)
+
+# %%
+print(note_list)
 url_note = note_list[0]
 print(url_note)
-
+# %%
 try:
     note = requests.get(url_note)
     if note.status_code == 200:
         s_note = BeautifulSoup(note.text, 'lxml')
         # Title
-        
-except Error as e:
+        title = s_note.find('div', attrs={'class': "col 2-col"}).find('h1')
+        # print(title.text)
+        date = s_note.find('div', attrs="date").find('span')
+        # print(date.text)
+
+        # volanta
+        teaser = s_note.find(
+            'div', attrs={'class': "col 2-col"}).find('h4')  # maybe None
+        # print(teaser.text)
+        # print(teaser.get_text())
+
+        subheader = s_note.find(
+            'div', attrs={'class': "col 2-col"}).find('h3')  # maybe None
+
+        # print(subheader.get_text())
+
+        author = s_note.find('div', attrs={'class': "author-name"})
+        # print(author.text)
+
+        body = s_note.find(
+            'div', attrs={'class': "article-main-content article-text"}).find_all('p')
+
+        print(body)
+
+except Exception as e:
     print(f'Error {e}', '\n')
+# %%
+media = s_note.find('figure', attrs={
+    'class': "object-fit-block--contain intrinsic-container intrinsic-container-3x2"}).find('img')
+print(media)
+# %%
+media_src = media.get('data-src')
+print(media_src)
+# %%
+img_req = requests.get(media_src)
+# %%
+print(img_req.status_code == 200)
+# %%
+img_req.content
+# %%
+
+Image(img_req.content)
 # %%

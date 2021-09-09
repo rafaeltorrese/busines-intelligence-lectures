@@ -172,10 +172,46 @@ except:
 print('Code still running')
 ```
 
-## Content Downloading 
 
+## Content Downloading 
+1. Save one link from the link list
+```python
+url_note = article_links[0]
+print(url_note)
+```
+2. Extract the title and the date. Inspect the news for these elements. 
+
+```python
+try:
+    note = requests.get(url_note)
+    if note.status_code == 200:
+        soup_note = BeautifulSoup(note.text, 'lxml')
+        # Extract title
+        title = soup_note.find('div', attrs={'class': "col 2-col"}).find('h1')
+        print(title)
+        date = soup_note.find('div', attrs={'class': "date"}).find('span')
+
+        # Extract volanta
+        teaser = soup_note.find('div', attrs={'class': "col 2-col"}).find('h4')
+        print(teaser.text)
+        print(teaser.get_text())
+
+        subheader = soup_note.find('div', attrs={'class': "col 2-col"}).find('h3')
+        
+        author = soup_note.find('div', attrs={'class': "author-name"})
+        body =  soup_note.find('main')
+
+        body = soup_note.find(
+            'div', attrs={'class': "article-main-content article-text"}).find_all('p')
+
+        print(body)
+except Exception as e:
+    print('Error: ')
+    print(e)
+    print('\n')
+```
 
 ## Media Content
-
+media = soup_note.find()
 ## Scraper as a whole
 
