@@ -18,6 +18,85 @@ def my_links_section(url, section):
 
     return article_links
 
+#%%
+def get_info(soup_note):
+    info = {
+        'date': None,
+        'title': None,
+        'teaser': None,
+        'subheader': None,
+        'author': None,
+        'body': None,
+        'image': None,
+        }
+
+    date = soup_note.find('time').get('datetime')
+    if date:
+        info['date'] = date.split('T')[0]
+
+    title = soup_note.find('div', attrs={'class': "col 2-col"}).find('h1')
+    if title:
+        info['title'] = title.get_text()
+
+    # volanta
+    teaser = soup_note.find(
+        'div', attrs={'class': "col 2-col"}).find('h4')  # maybe None
+    if teaser:
+        info['teaser'] = teaser.get_text()
+
+    # copete o bajada
+    subheader = soup_note.find(
+        'div', attrs={'class': "col 2-col"}).find('h3')  # maybe None
+    if subheader:
+        info['subheader'] = subheader.get_text()
+
+    # author
+    author = soup_note.find('div', attrs={'class': "author-name"})
+    if author:
+        info['author'] = author.get_text()
+
+    # body
+    body = soup_note.find(
+        'div', attrs={'class': "article-main-content article-text"}).find_all('p')
+    body_text = [b.get_text() for b in body]
+    if body:
+        info['body'] = body_text[0]
+    
+    # media
+    img = soup_note.find('figure', attrs={
+    'class': "object-fit-block--contain intrinsic-container intrinsic-container-3x2"}).find('img')
+    
+    if img:
+        img_src = img.get('data-src')
+        try:
+            img_request = requests.get(img_src)
+            if img_request.status_code == 200:
+                info['image'] = img_request.content
+        except :
+            print('Image was not found')
+    else:
+        print('There is no media image')
+    
+    return info
+#%%
+def scrap_note(url):
+    try:
+        note = requests.get(url)
+    except Exception as e:
+        print(f'Error scraping URL {url}')
+        print(e)
+        return None
+    if note.status_code != 200:
+        print(f'Error in note {url}')
+        print(f'Status Code {note.status_code}')
+        return None
+    
+    soup_note = BeautifulSoup(note.text, 'lxml')
+    
+    info_dict = get_info(soup_note)
+    info_dict['url'] = url
+
+    return info_dict
 
 # %%
 url = 'https://www.pagina12.com.ar'
@@ -137,20 +216,21 @@ try:
         s_note = BeautifulSoup(note.text, 'lxml')
         # Title
         title = s_note.find('div', attrs={'class': "col 2-col"}).find('h1')
-        # print(title.text)
-        date = s_note.find('div', attrs="date").find('span')
-        # print(date.text)
+        print(title.text)
+        
+        date = s_note.find('time').get('datetime')
+        print(date.split('T')[0])
 
         # volanta
         teaser = s_note.find(
             'div', attrs={'class': "col 2-col"}).find('h4')  # maybe None
         # print(teaser.text)
-        # print(teaser.get_text())
+        print(teaser.get_text())
 
         subheader = s_note.find(
             'div', attrs={'class': "col 2-col"}).find('h3')  # maybe None
 
-        # print(subheader.get_text())
+        print(subheader.get_text())
 
         author = s_note.find('div', attrs={'class': "author-name"})
         # print(author.text)
@@ -158,7 +238,7 @@ try:
         body = s_note.find(
             'div', attrs={'class': "article-main-content article-text"}).find_all('p')
 
-        print(body)
+        # print(body)
 
 except Exception as e:
     print(f'Error {e}', '\n')
@@ -178,4 +258,40 @@ img_req.content
 # %%
 
 Image(img_req.content)
+# %%
+print(url_note)
+#%%
+print(scrap_note(url_note))
+# %%
+print(links_sections)
+# %%
+notes = []
+for link in links_sections:
+    try:
+        r = requests.get(link)
+        if r.status_code == 200:
+            soup = BeautifulSoup(r.text, 'lxml')
+            notes.extend(get_notes(url, soup))
+        else:
+            print('Section was not found')
+    except:
+        print('Section was not found', link)
+
+# %%
+print(notes)
+# %%
+data = []
+for i, note in enumerate(notes, 1):
+    print(f'Scraping note {i} / {len(notes)}')
+    data.append(scrap_note(note))
+# %%
+print(len(data))
+# %%
+import pandas as pd
+# %%
+df = pd.DataFrame(data)
+# %%
+print(df.head())
+# %%
+df.to_csv('NotesPage12.csv')
 # %%
