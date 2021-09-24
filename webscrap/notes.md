@@ -212,6 +212,67 @@ except Exception as e:
 ```
 
 ## Media Content
-media = soup_note.find()
-## Scraper as a whole
+```python
+media = soup_note.find('figure', attrs={
+    'class': "object-fit-block--contain intrinsic-container intrinsic-container-3x2"}).find('img')
 
+```
+```python
+print(media)
+```
+
+```python
+media_src = media.get('data-src')
+print(media_src)
+img_req = requests.get(media_src)
+print(img_req.status_code == 200)
+img_req.content
+
+```
+
+```python
+from IPython.display import Image
+Image(img_req.content)
+
+```
+## Scraper as a whole
+```python
+def get_info(soup_note):
+    info = {
+        'title': None,
+        'teaser': None,
+        'subheader': None,
+        'author': None,
+        'body': None,
+        }
+
+    title = soup_note.find('div', attrs={'class': "col 2-col"}).find('h1')
+    if title:
+        info['title'] = title
+
+    # volanta
+    teaser = soup_note.find(
+        'div', attrs={'class': "col 2-col"}).find('h4')  # maybe None
+    if teaser:
+        info['teaser'] = teaser
+
+    # copete o bajada
+    subheader = soup_note.find(
+        'div', attrs={'class': "col 2-col"}).find('h3')  # maybe None
+    if subheader:
+        info['subheader'] = subheader
+
+    # author
+    author = soup_note.find('div', attrs={'class': "author-name"})
+    if author:
+        info['author'] = author
+
+    # cuerpo
+    body = soup_note.find(
+        'div', attrs={'class': "article-main-content article-text"}).find_all('p')
+    body_text = [b.get_text() for b in body]
+    if body:
+        info['body'] = body_text
+
+    return info
+```
