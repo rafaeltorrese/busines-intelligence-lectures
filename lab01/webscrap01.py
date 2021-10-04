@@ -20,7 +20,7 @@ def parse_notes(note, number,  date):
             
             try:
                 title = note[1].replace('\"', '').replace("'",'').replace(':', ' ').replace('/', ' ').strip()
-                summary = note[2].strip()
+                summary = note[2].replace('\"', '').strip()
                 body_list = parser.xpath(XPATH_BODY)
             except IndexError:
                 return
@@ -28,6 +28,7 @@ def parse_notes(note, number,  date):
             with open(f'{date}/{str(number).zfill(2)}-{title}.txt',  'w', newline='',  encoding='utf8') as file:
                 file.write(title)
                 file.write('\n\n')
+                file.write('SUMMARY: ')
                 file.write(summary)
                 file.write('\n\n')
                 for p in body_list:
