@@ -59,7 +59,7 @@ def parse_home(url):
             if not os.path.isdir(today):
                 os.mkdir(today)
 
-            total_news = len(newslist)
+            
             for i, news in enumerate(newslist, 1):
                 parse_notes(news, i, today)
         
