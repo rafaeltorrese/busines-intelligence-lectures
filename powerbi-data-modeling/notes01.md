@@ -1,5 +1,29 @@
 # Section 01. Defining Tables
 
+Got It!
+1. Data modeling and table properties
+Welcome! My name is Maarten, and I'll be one of your instructors in this course on modeling data in Power BI.
+
+2. What is a data model?
+So, what is a data model? In short, a data model is a conceptual view of data elements. Typically, this is done in the form of a diagram. Data models include tables, columns, and relationships between tables. They can also include information on data types and keys.
+
+3. Data modeling
+Data modeling is the process of creating a data model. It's a critical part of Power BI development. Incoming data usually needs some cleanup and often substantial alterations to the data to find the right insights. This includes changing columns to join together disparate tables, removing non-data rows, or comprehensive changes like pivoting tables. As a result, data modeling techniques can shrink down the amount of disk space needed to store and process data, which improve speed. Finally, data modeling makes the model easier for business users to interpret.
+
+4. Data modeling in Power BI & Power Query
+Data modeling in Power BI is mainly handled by Power Query, the query editor for Power BI and other Microsoft products, like Excel. Its main purpose is to manage the queries which drive dashboards and reports, but also to assist with data modeling. Power Query directly changes the data, such as removing columns. You define your base changes in Power Query, and perform fine-tuning steps in Power BI.
+
+5. Columns and row management
+Let's overview some key data modeling steps you can do in Power Query and Power BI. On a column and row level, there are several options, such as removing specific columns, using the first row as the header, breaking out a lengthy column into multiple, independent columns, or summarizing data in a table and grouping it by another column.
+
+6. Data types
+In Power Query and Power BI, columns can be assigned to data types. The motivation is to constrain your data, ensuring that values match expectations. This can also optimize storage: the numeric value 1,000,000 fits in four bytes but would take nine bytes as a string. Some functionality is limited to specific types--for example, date arithmetic is only possible on date and time columns. Power Query usually correctly infers the data types of columns, and does so using the first few hundred rows.
+
+7. Rounding
+We could also specify decimal places in Power Query. This actually changes the loaded data, so it isn't just a formatting choice. This is useful when there are strict rounding rules. However, typically, we want to round after performing all calculations, so rounding in Power Query is uncommon. Formatting within Power BI itself changes the data's appearance but doesn't affect the stored data. Thus, rounding happens after any calculations. Therefore, we usually prefer rounding here than in Power Query. You now know a few key ways to alter data in Power BI, but these aren't the only ones. You'll discover more during the upcoming videos and exercises about string operations and other column modifications!
+
+8. The dataset
+The dataset we'll be using comes from the United States Census Bureau and summarizes survey data asked of manufacturing firms in 2018 and 2019. It contains a variety of measures around payroll and numbers of employees for several industries according to the North American Industry Classification System (or NAICS). In later exercises, we'll extend this dataset with geography, time, and other dimension tables.
 
 ## Lesson 01. Data Modeling And Table Properties
 
