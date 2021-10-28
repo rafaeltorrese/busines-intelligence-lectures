@@ -42,6 +42,45 @@
 14. Let's practice!
     Let's check your understanding of dimensional modeling!
 
+
+1. Modelado dimensional
+   ¡Bienvenido de nuevo! Soy Sara y seré tu instructora en el próximo capítulo. Anteriormente, aprendió que los modelos de datos proporcionan una representación conceptual de los elementos de datos y las relaciones entre ellos. Existen muchos enfoques para el modelado de datos. Nos centraremos en uno, el modelo dimensional.
+
+2. El modelo de Kimball
+   El modelo de Kimball, también conocido como modelo dimensional, es uno de los enfoques más populares para el modelado de datos.
+
+3. El modelo de Kimball
+   Hay dos conceptos clave en el modelo de Kimball: hechos y dimensiones. Los hechos son las métricas de su proceso empresarial. Las dimensiones proporcionan el contexto que rodea un proceso empresarial. Estos se combinan para formar un esquema en estrella. El nombre del esquema en estrella proviene de la forma en que se conectan los hechos y las dimensiones. Por lo general, tenemos varias dimensiones que rodean cada hecho. En este ejemplo, las medidas relacionadas con las ventas de propiedades se almacenan en la tabla de hechos, y las tablas de prestamista, vendedor, fecha, propiedad y tipo de pago proporcionan más contexto sobre cada venta de propiedad. De esta forma se organizan enormes cantidades de datos en almacenes de datos. Power BI está optimizado para usar esquemas en estrella sobre cualquier otra forma de cargar datos, por lo que Power BI es más rápido y fácil de usar con un enfoque dimensional.
+
+4. Tablas de hechos
+   Primero echemos un vistazo más de cerca a las tablas de hechos. Una tabla de hechos suele tener dos tipos de columnas; hechos y claves. Los hechos son las medidas o métricas de su proceso empresarial. Los ejemplos incluyen ventas, recuento de empleados o número de visitas al sitio web. Generalmente son fechas y números que podemos agregar de alguna manera. Las claves son cómo establecemos las relaciones entre las tablas de hechos y las tablas de dimensiones. Esperamos que las tablas de hechos sean altas y estrechas. Tienen muchas filas, por lo que intentamos minimizar el número de columnas y el tamaño de esas columnas.
+
+5. Tablas de hechos: un ejemplo
+   A continuación, se muestra un ejemplo de una tabla de hechos, Ventas de propiedades. Cada fila representa una propiedad que se alquiló en una fecha específica.
+
+6. Tablas de hechos: un ejemplo
+   Las primeras cinco columnas contienen claves o ID que se utilizan para vincular a cada una de las tablas de dimensiones. Allí encontrará más información sobre el prestamista, la fecha, la propiedad, el tipo de pago y el vendedor.
+
+7. Tablas de hechos: un ejemplo
+   Las dos últimas columnas contienen las medidas. Aquí estamos rastreando el alquiler, en dólares, y la duración del contrato de alquiler, en meses.
+
+8. Tablas de dimensiones
+   A continuación, veremos las tablas de dimensiones que proporcionan el contexto en torno a los hechos. Un hecho puede decirle cuánto o con qué frecuencia, pero las dimensiones dan el resto de la historia. Quién lo hizo, cómo lo hicieron, dónde lo hicieron, etc. Las dimensiones son conceptos comerciales compartidos, generalmente en forma de sustantivo como Persona, Empleado, Cliente y Proveedor. Las dimensiones contienen datos estáticos o que cambian lentamente. Piense en información como nombres, fechas de nacimiento y altura. Las tablas de dimensiones suelen ser cortas y anchas. No contienen tantas filas, pero contienen una gran cantidad de contexto para los hechos.
+
+9. Tablas de dimensiones: un ejemplo
+   Echemos un vistazo a un ejemplo. Aquí puede ver la tabla de vendedores.
+
+10. Tablas de dimensiones: un ejemplo
+    La primera columna contiene la misma clave que en la tabla de hechos y se puede usar para combinar la información de ambas tablas.
+
+11. Tablas de dimensiones: un ejemplo
+    La tabla también almacena atributos adicionales sobre cada vendedor de la empresa.
+
+12. Esquema de estrella
+    Aquí está el mismo esquema de estrella de antes. En el modelo de Kimball, las dimensiones se utilizan a menudo en múltiples hechos. Estas dimensiones que rodean las ventas de propiedades también podrían proporcionar contexto a una tabla de hechos diferente. En un esquema de estrella, las dimensiones no se vinculan a otras dimensiones.
+
+13. El conjunto de datos
+    Este capítulo continuará con los datos del Censo sobre establecimientos activos en el sector manufacturero. En los ejercicios, creará una tabla de hechos que contiene medidas como el número de empleados, el número de empresas, etc. Además, habrá más información sobre el establecimiento en forma de tablas de dimensiones. Estos incluyen datos sobre la industria, el tiempo, la edad y la geografía de los establecimientos.
 ## Exercise 01
 
 - Fact
@@ -124,36 +163,46 @@ Time to add the final dimension, **Age** . In the data you can see that we have 
 
 ## Lesson03. Star and snowflake schemas. Instructor
 
-1. Star and snowflake schemas
-   Welcome back! Let's continue building on your knowledge from earlier. In this video, we'll take a look at snowflake schemas, an extension of the star schema.
+Esquemas de estrellas y copos de nieve
+   ¡Bienvenido de nuevo! Continuemos construyendo sobre su conocimiento de antes. En este video, veremos los esquemas de copos de nieve, una extensión del esquema de estrella.
 
-2. Star schema
-   Remember from earlier that a star schema consists of one or more fact tables surrounded by dimension tables.
+2. Esquema de estrella
+   Recuerde de antes que un esquema en estrella consta de una o más tablas de hechos rodeadas por tablas de dimensiones.
 
-3. Snowflake schema
-   The snowflake schema is like a star schema, except it allows relationships between dimensions. In the example you can see that the Lender and Property dimensions each link to other dimension tables. Note that fact tables remain the same.
+3. Esquema de copo de nieve
+   El esquema de copo de nieve es como un esquema de estrella, excepto que permite relaciones entre dimensiones. En el ejemplo, puede ver que las dimensiones Prestamista y Propiedad están vinculadas a otras tablas de dimensiones. Tenga en cuenta que las tablas de hechos siguen siendo las mismas.
 
-4. A closer look
-   The biggest difference between the two styles is how they handle hierarchical data. Star dimensions tend to have all levels of a hierarchy in the same table, whereas with snowflake dimensions, hierarchy levels are explicitly broken out into multiple tables. Here you can see a Product dimension table. Imagine that each product has a name. Each product also belongs to a product subcategory, which itself belongs to a product category. In a star schema, all levels of the hierarchy, as well as their attributes, show up on the same product dimension. With a snowflake schema, each level of the hierarchy becomes its own table and we join those tables, usually with keys.
+4. Una mirada más de cerca
+   La mayor diferencia entre los dos estilos es cómo manejan los datos jerárquicos. Las dimensiones de estrella tienden a tener todos los niveles de una jerarquía en la misma tabla, mientras que con las dimensiones de copo de nieve, los niveles de jerarquía se dividen explícitamente en varias tablas. Aquí puede ver una tabla de dimensiones del producto. Imagina que cada producto tiene un nombre. Cada producto también pertenece a una subcategoría de productos, que a su vez pertenece a una categoría de productos. En un esquema en estrella, todos los niveles de la jerarquía, así como sus atributos, aparecen en la misma dimensión de producto. Con un esquema de copo de nieve, cada nivel de la jerarquía se convierte en su propia tabla y unimos esas tablas, generalmente con claves.
 
-5. Comparison
-   When it comes to dimensional modeling theory, we strongly prefer star schemas over snowflake schemas. The key reason is that star schemas are easier for business users to understand. They don't want to worry about keys or hierarchies. The other benefit is that quite a few business intelligence tools have been optimized for the star schemas. Although dimensional modeling theory leans heavily toward star schemas, we do see snowflake schemas in some data warehouses. The reason for this is that star schemas duplicate quite a bit of data, which leads to storage costs and can impact performance. Also, star schemas are not ideal for frequently-updated data, especially with large dimensions. Suppose you have millions of rows in a dimension containing a column for country. When a country name changes, you may have to update a large number of rows with the new country name. By contrast, with a snowflake schema this would be an update of a single row.
+5. Comparación
+   Cuando se trata de la teoría del modelado dimensional, preferimos los esquemas de estrella a los esquemas de copo de nieve. La razón clave es que los esquemas en estrella son más fáciles de entender para los usuarios empresariales. No quieren preocuparse por claves o jerarquías. El otro beneficio es que se han optimizado bastantes herramientas de inteligencia empresarial para los esquemas estrella. Aunque la teoría del modelado dimensional se inclina mucho hacia los esquemas en estrella, vemos esquemas de copos de nieve en algunos almacenes de datos. La razón de esto es que los esquemas en estrella duplican una gran cantidad de datos, lo que genera costos de almacenamiento y puede afectar el rendimiento. Además, los esquemas en estrella no son ideales para datos que se actualizan con frecuencia, especialmente con grandes dimensiones. Suponga que tiene millones de filas en una dimensión que contiene una columna para el país. Cuando cambia el nombre de un país, es posible que deba actualizar una gran cantidad de filas con el nuevo nombre del país. Por el contrario, con un esquema de copo de nieve, esto sería una actualización de una sola fila.
 
-6. Stars and snowflakes in Power BI
-   When it comes to Power BI in particular, it is important to note that both schemas work. If you have a snowflake schema in an existing warehouse, you could import the data as-is, making migrations easier. That said, Power BI does prefer star schemas for the same reason as dimensional modeling theory. Because it is easier for users to understand. Furthermore, there are some optimizations in Power BI which make performance much less of a concern.
+6. Estrellas y copos de nieve en Power BI
+   Cuando se trata de Power BI en particular, es importante tener en cuenta que ambos esquemas funcionan. Si tiene un esquema de copo de nieve en un almacén existente, puede importar los datos tal cual, facilitando las migraciones. Dicho esto, Power BI prefiere los esquemas en estrella por la misma razón que la teoría del modelado dimensional. Porque es más fácil de entender para los usuarios. Además, hay algunas optimizaciones en Power BI que hacen que el rendimiento sea una preocupación mucho menor.
 
-7. The performance analyzer
-   Power BI has a built-in performance analyzer. When enabled, it keeps track of at least three key measures on each visual. The first is how long it took to read the data from its internal database and then perform any DAX operations on the data. The second component is figuring out how long it took the visual to render. Finally, a third measure captures everything else, which is typically waiting time on other operations, including waiting for cross-filtering operations to complete.
+7. El analizador de rendimiento
+   Power BI tiene un analizador de rendimiento integrado. Cuando está habilitado, realiza un seguimiento de al menos tres medidas clave en cada objeto visual. El primero es cuánto tiempo tomó leer los datos de su base de datos interna y luego realizar cualquier operación de DAX en los datos. El segundo componente es averiguar cuánto tiempo tardó el visual en renderizarse. Finalmente, una tercera medida captura todo lo demás, que normalmente es el tiempo de espera en otras operaciones, incluida la espera de que se completen las operaciones de filtrado cruzado.
 
-8. Performance tuning advice
-   There are a number of ways you can improve performance. If the DAX query takes a long time to complete, you could tune your DAX operations or improve your data loading performance. This might include improving your data model! If the big problem is in visual display, use less complicated visuals and show less information on the screen. Power BI needs to render each data point, so plotting tens of thousands of points may take a while. If the Other value is the cause of your slowness, you might want to reduce the number of visuals on the page.
+8. Consejos de ajuste del rendimiento
+   Hay varias formas de mejorar el rendimiento. Si la consulta de DAX tarda mucho en completarse, puede ajustar sus operaciones de DAX o mejorar el rendimiento de la carga de datos. ¡Esto podría incluir mejorar su modelo de datos! Si el gran problema está en la visualización, use imágenes menos complicadas y muestre menos información en la pantalla. Power BI necesita representar cada punto de datos, por lo que trazar decenas de miles de puntos puede llevar un tiempo. Si el valor Otro es la causa de su lentitud, es posible que desee reducir la cantidad de imágenes en la página.
 
-9. Let's practice!
-   Time to practice!
+9. ¡Practiquemos!
+   
 
 ### Exercise 03-01
+Which of the following would you expect to see on a snowflake schema but not a star schema?
+
+1.  A fact table joining to another fact table
+2. A fact table joining to a dimension table
+3. A dimension table joining to another dimension table *
+4. A dimension table joining to two separate fact tables
 
 ## Lesson04. Evaluating performance. Instructor
+1. Evaluación del desempeño
+En esta demostración, veremos cómo crear un esquema de copo de nieve y aprenderemos a usar el analizador de rendimiento. Aquí, en la vista del modelo, puede ver el esquema en estrella que creé anteriormente. Si echamos un vistazo más de cerca a la dimensión Geografía, podemos ver que está formada por datos jerárquicos. Primero el país, luego el estado. Una de las principales diferencias entre los esquemas de estrella y copo de nieve es cómo manejan los datos jerárquicos. Dado que en el esquema del copo de nieve las dimensiones se pueden conectar a otras dimensiones, podemos dividir la información del estado y del país. ¡Hagamos exactamente eso! Entraré en Power Query haciendo clic en Transformar datos. Duplicaré la tabla de geografía dos veces y cambiaré el nombre de las nuevas tablas País y Estado. Pensemos en cómo queremos conectarnos a la tabla de hechos. El nivel más detallado de geografía es Estado, y ese es también el id que está presente en la tabla de hechos. Por lo tanto, conectaremos la tabla de estado con la Encuesta de establecimientos. También necesitaremos conectar la tabla de estado a la tabla de país, lo que significa que también debemos mantener la identificación del país. Pero el valor real del país se puede eliminar aquí. Haré clic con el botón derecho y seleccionaré Eliminar. A continuación, veremos la tabla País. Este debe contener solo información del país, por lo que eliminaré todos los datos estatales. Eliminemos también las filas duplicadas. Parece que solo hay un país en nuestros datos en este momento. Tenga en cuenta que si el valor del país tuviera que actualizarse, solo tenemos que hacerlo en un lugar en este esquema de copo de nieve, mientras que sería mucho más engorroso hacerlo en el esquema en estrella de antes. Cerremos, apliquemos y echemos un vistazo al modelo de datos. Tenga en cuenta que también he mantenido la dimensión de estrella de Geografía, por lo que podemos comparar fácilmente el rendimiento más adelante. En una situación de la vida real, usaría solo uno de los dos enfoques. Puede ver que Power BI ha creado automáticamente relaciones entre la dimensión de estrella y las dimensiones de copo de nieve. Esto no está bien. Eliminémoslos. Haré clic derecho en la línea y seleccionaré Eliminar. Hagamos lo mismo con la otra mesa. ¡Aquí vamos! Así que estas son nuestras dimensiones de copo de nieve. Ahora voy a crear una relación entre las tablas de hechos y de estado. Podría arrastrar los nombres de las columnas uno encima del otro o usar el botón Administrar relaciones aquí. Seleccionaré Nuevo y elegiré las dos tablas. Puede ver que Power BI ha reconocido el Id. De estado como la clave, lo cual es correcto. Haga clic en Aceptar y cierre. Por último, puede ver que la relación entre el estado y el país es una línea de puntos, lo que significa que está inactivo. Cambiemos eso rápidamente yendo a Propiedades. Aquí vamos. Ese es nuestro esquema de copo de nieve. Y este sería nuestro esquema estrella. Iré a la vista Informe y crearé dos visualizaciones. Primero, crearé un gráfico de barras con el número de establecimientos por estado, utilizando el campo de la dimensión de estrella. Luego, haré lo mismo pero usaré la dimensión del copo de nieve para el estado. Cambiemos rápidamente el nombre de estos elementos visuales a esquema de estrella y esquema de copo de nieve. Ahora, podemos comparar el desempeño. Iré a Ver aquí en la parte superior y haré clic en Analizador de rendimiento. Aparece el panel del analizador de rendimiento. Comenzaré a grabar y luego actualizaré las imágenes. Esto me mostrará el tiempo que lleva cargar las dos imágenes en la página en milisegundos. Si actualizo un par de veces, podemos ver que un esquema no es consistentemente más rápido que el otro. Con nuestro pequeño conjunto de datos, todo se carga bastante rápido, pero si trabaja con miles o millones de filas, el esquema en estrella debería ser más eficiente. Esto se debe a que los esquemas en estrella solo unirán la tabla de hechos con las tablas de dimensiones, lo que conducirá a tiempos de ejecución más rápidos. ¡Eso es todo, es hora de hacer algunos ejercicios!
+
+2. ¡Practiquemos!
 
 1. Evaluating performance
    In this demo, we’ll see how to create a snowflake schema and learn how to use the performance analyzer. Here in the model view, you can see the star schema I created earlier. If we take a closer look at the Geography dimension, we can see that it is made up of hierarchical data. Country first, then State. One of the main differences between star and snowflake schemas is how they handle hierarchical data. Since in the snowflake schema dimensions can be connected to other dimensions, we can split out the state and country information. Let’s do exactly that! I’ll go into Power Query by clicking Transform data. I’ll duplicate the geography table twice and rename the new tables Country and State. Let’s think about how we want to connect to the fact table. The most detailed level of geography is State, and that is also the id that is present in the fact table. So we’ll connect the State table to Establishment Survey. We’ll also need to connect the State table to the Country table, which means we need to keep the Country id as well. But the actual country value can be removed here. I’ll right-click and select Remove. Next, we’ll look at the Country table. This one should contain only country information, so I’ll remove all state data. Let’s also remove the duplicate rows. Looks like there is only one country in our data at the moment. Note that if the country value would have to be updated, we only have to do it in one place in this snowflake schema, whereas it would be a lot more cumbersome to do this in the star schema from before. Let’s close and apply and take a look at the data model. Note that I’ve kept the Geography star dimension as well, so we can easily compare performance later on. In a real-life situation, you would use only one of the two approaches. You can see that Power BI has automatically created relationships between the star dimension and the snowflake dimensions. This is not right. Let’s remove them. I’ll right click on the line and select Delete. Let’s do the same for the other table. There we go! So these are our snowflake dimensions. Now I’m going to create a relationship between the fact and State tables. I could drag the column names on top of eachother or use the Manage relationships button here. I’ll select New and choose the two tables. You can see that Power BI has recognized State id as the key, which is correct. Click OK and close. Lastly, you can see that the relationship between State and Country is a dotted line, which means it’s inactive. Let’s quickly change that by going into Properties. There we go. That’s our snowflake schema. And this would be our star schema. I’m going to go into the Report view and create two visualizations. First, I’ll create a bar chart with the number of establishments by state, using the field from the star dimension. Then, I’ll do the same but use the snowflake dimension for the state. Let’s quickly rename these visuals to star schema and snowflake schema. Now, we can compare the performance. I’ll go to View here at the top and click on Performance analyzer. This pops out the Performance analyzer pane. I’ll start recording and then refresh the visuals. This will show me the time it takes to load the two visuals on the page in milliseconds. If I refresh a couple of times, we can see that one schema isn’t consistently faster than the other. With our small dataset everything loads pretty quickly, but if you’re working with thousands or millions of rows, the star schema should be more efficient. This is because star schemas will only join the fact table with the dimension tables, leading to faster execution times. That’s it, time for some exercises!
@@ -161,7 +210,24 @@ Time to add the final dimension, **Age** . In the data you can see that we have 
 2. Let's practice!
 
 ### Exercise 04-01
+**Star schemas**
 
+1. Create a new page and name it "Industry insights". Navigate to the _ Data_  view to get familiar with the columns in the "Industry" dimension.
+2. Navigate to the _Data_  view to get familiar with the columns in the "Industry" dimension.
+3. Go back to the _Report_  view and add a table visualization  with the following columns from the "Industry" dimension: `Industry group`, `NAICS Code description`, `Sector`, and `Subsector`.
+4. Note that the columns in the Industry table make up a hierarchy. Starting from the highest level, each category gives a more granular view of what industry the establishments operate in.
+5. Put the columns in the right order, going from less to more detail.
+6. **How is the Industry hierarchy structured?**
+   - Industry group > NAICS Code description > Sector > Subsector
+   - Sector > Subsector > Industry group > NAICS Code description
+   - Sector > Subsector > NAICS Code description >  Industry group
 ### Exercise 04-02
+
+**Snowflake schemas**
+While Power BI is optimized for star schemas, it needs to work in a variety of use cases. One alternative data modeling approach is to use snowflake schemas, where dimensions can be connected to other dimensions. A big difference between the two is how they handle hierarchical data. Let's create a _snowflake schema_  and break down the **Industry**  dimension as follows.
+
+![Star Schema](ex_screenshot2.png "Star")
+
+Note that, in this exercise, we'll also keep the star dimension so that we can compare the results. In real life, you would choose one of the two approaches.
 
 ### Exercise 04-03
