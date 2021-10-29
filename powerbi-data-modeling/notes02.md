@@ -239,6 +239,7 @@ Loading and querying across star schemas is at the core of Power BI. Let's conti
 ### Exercise 04-02
 
 **Snowflake schemas**
+
 While Power BI is optimized for star schemas, it needs to work in a variety of use cases. One alternative data modeling approach is to use snowflake schemas, where dimensions can be connected to other dimensions. 
 
 A big difference between the two is how they handle hierarchical data. _Star_  dimensions tend to have all levels of a hierarchy in the same table. With _snowflake_  dimensions, hierarchy levels are broken out into multiple tables.
@@ -251,7 +252,6 @@ Let's create a _snowflake schema_  and break down the **Industry**  dimension as
 
 Note that, in this exercise, we'll also keep the star dimension so that we can compare the results. In real life, you would choose one of the two approaches.
 
-
 1. Go to Power Query and duplicate the Industry queries four times. Rename the duplicated queries to "NAICS code", "Industry group", "Subsector", and "Sector".
 2. Remember the hierarchy order: `Sector` > `Subsector` > `Industry group` > `NAICS Code description`. For each table, keep only the code and text description columns of that level of the hierarchy, as well as the code of the previous, less granular, level in the hierarchy (if there is one). Make sure to remove duplicate values.
 3. 
@@ -263,6 +263,7 @@ Note that, in this exercise, we'll also keep the star dimension so that we can c
 5. Check that the other snowflake dimensions are connected to each other in the right order. If there are dotted-line relationships, double-click on the relationship to go into the _Properties_  and select "Make this relationship active."
 6. **In the snowflake schema, how many rows would you have to update if the name of the "Food Manufacturing" subsector changes?** 1
 ### Exercise 04-03
+
 **The performance analyzer**
 
 You've modeled the industry data in two different ways; a star schema and a snowflake schema. Let's compare the performance between the two approaches.
