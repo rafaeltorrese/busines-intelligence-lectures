@@ -278,4 +278,4 @@ Power BI's _performance analyzer_  provides a mechanism for measuring performanc
 6. **What takes the most amount of time for both visuals?**
    - DAX query
    - Visual display
-   - Other
+   - Other *
