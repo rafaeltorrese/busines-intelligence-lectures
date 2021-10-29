@@ -1,7 +1,7 @@
-# Section 02. Modeling Data
+# Dimensional Modeling
 
 1. Dimensional modeling
-   Welcome back! I'm Sara and I will be your instructor for this next chapter. Earlier, you learned that data models provide a conceptual representation of data elements and the relationships between them. There are many approaches to data modeling. We'll focus on one, the dimensional model.
+   Earlier, you learned that data models provide a conceptual representation of data elements and the relationships between them. There are many approaches to data modeling. We'll focus on one, the dimensional model.
 
 2. The Kimball Model
    The Kimball model, otherwise known as the dimensional model, is one of the most popular approaches to data modeling.
@@ -140,7 +140,7 @@ Datasets will frequently come in a "wide" format, containing both fact and dimen
 
 Los conjuntos de datos vendrán con frecuencia en un formato "amplio", que contiene datos tanto de hechos como dimensionales. La división de estos archivos en hechos y dimensiones mejorará las consultas y puede mejorar el rendimiento en conjuntos de datos más grandes. En los próximos ejercicios, crearemos el siguiente esquema en estrella:
 
-! [Star Schema] (ex_screenshot_01-02.png "Star Schema")
+![Star Schema](ex_screenshot_01-02.png "Star Schema")
 
 1. Cargue el archivo `Establishment Survey.csv`
 2. Duplique la consulta "Encuesta de establecimientos" de empresas y cámbiele el nombre a "Industria".
@@ -172,7 +172,7 @@ Time to add the final dimension, **Age** . In the data you can see that we have 
 3. Remove duplicate values from the dataset and then close Power Query.
 4. Navigate to the _Model_ view and connect the Age dimension to the Establishment Survey fact by `Age code` if this is not the case yet. _If for some reason a new table is not showing up in the Model view, you can manually add a relationship using the Manage relationships icon in the Home menu. Click "New…" and select the tables and columns where you want to define the relationship._
 5. Return to the _Report_ view and add a slicer on `Establishment Age` from the new Age dimension.
-6. **How many average employees did 3-year old firms in the Food Manufacturing subsector have during the 90s?**
+6. **How many average employees did 3-year old firms in the Food Manufacturing subsector have during the 90s?** 306375.50
 
 ## Lesson03. Star and snowflake schemas. Instructor
 
@@ -223,23 +223,58 @@ En esta demostración, veremos cómo crear un esquema de copo de nieve y aprende
 
 ### Exercise 04-01
 **Star schemas**
+Loading and querying across star schemas is at the core of Power BI. Let's continue with our star schema from before. In this exercise, we'll take a closer look at the way the **Industry**  dimension is modeled.
 
-1. Create a new page and name it "Industry insights". Navigate to the _ Data_  view to get familiar with the columns in the "Industry" dimension.
+![Star Schema](ex_screenshot_01-02.png "Star Schema")
+
+1. Create a new page and name it "Industry insights". Navigate to the _Data_  view to get familiar with the columns in the "Industry" dimension.
 2. Navigate to the _Data_  view to get familiar with the columns in the "Industry" dimension.
 3. Go back to the _Report_  view and add a table visualization  with the following columns from the "Industry" dimension: `Industry group`, `NAICS Code description`, `Sector`, and `Subsector`.
 4. Note that the columns in the Industry table make up a hierarchy. Starting from the highest level, each category gives a more granular view of what industry the establishments operate in.
 5. Put the columns in the right order, going from less to more detail.
 6. **How is the Industry hierarchy structured?**
    - Industry group > NAICS Code description > Sector > Subsector
-   - Sector > Subsector > Industry group > NAICS Code description
+   - Sector > Subsector > Industry group > NAICS Code description * 
    - Sector > Subsector > NAICS Code description >  Industry group
 ### Exercise 04-02
 
 **Snowflake schemas**
-While Power BI is optimized for star schemas, it needs to work in a variety of use cases. One alternative data modeling approach is to use snowflake schemas, where dimensions can be connected to other dimensions. A big difference between the two is how they handle hierarchical data. Let's create a _snowflake schema_  and break down the **Industry**  dimension as follows.
+While Power BI is optimized for star schemas, it needs to work in a variety of use cases. One alternative data modeling approach is to use snowflake schemas, where dimensions can be connected to other dimensions. 
+
+A big difference between the two is how they handle hierarchical data. _Star_  dimensions tend to have all levels of a hierarchy in the same table. With _snowflake_  dimensions, hierarchy levels are broken out into multiple tables.
+
+
+Let's create a _snowflake schema_  and break down the **Industry**  dimension as follows.
+
 
 ![Star Schema](ex_screenshot2.png "Star")
 
 Note that, in this exercise, we'll also keep the star dimension so that we can compare the results. In real life, you would choose one of the two approaches.
 
+
+1. Go to Power Query and duplicate the Industry queries four times. Rename the duplicated queries to "NAICS code", "Industry group", "Subsector", and "Sector".
+2. Remember the hierarchy order: `Sector` > `Subsector` > `Industry group` > `NAICS Code description`. For each table, keep only the code and text description columns of that level of the hierarchy, as well as the code of the previous, less granular, level in the hierarchy (if there is one). Make sure to remove duplicate values.
+3. 
+   - Close Power Query and go to the _Model_  view.
+   - Delete the automatically created relationships between the "Industry" star dimension and the four tables you just created.
+4. 
+   - Create a relationship between "NAICS code" and the fact table, "Establishment Survey". 
+   - You can zoom in and out on the data model by using the `+`  and `-`  in the bottom right corner of the Power BI window.
+5. Check that the other snowflake dimensions are connected to each other in the right order. If there are dotted-line relationships, double-click on the relationship to go into the _Properties_  and select "Make this relationship active."
+6. **In the snowflake schema, how many rows would you have to update if the name of the "Food Manufacturing" subsector changes?** 1
 ### Exercise 04-03
+**The performance analyzer**
+
+You've modeled the industry data in two different ways; a star schema and a snowflake schema. Let's compare the performance between the two approaches.
+
+Power BI's _performance analyzer_  provides a mechanism for measuring performance in Power BI. It looks at the speed of data retrieval, DAX operations, and displays of information on the screen. Although the visuals and datasets we will work with are fairly simple and will load quickly, we can still use this value to understand the tool's potential.
+
+1. Go to the _Report_  view and create a new page named "Comparison". Create a line chart with the decade on the x-axis, the **average**  number of employees on the y-axis, and the subsector (from the  _star_  dimension "Industry") on the legend.
+2. Create another line chart with the decade on the x-axis, the **average**  number of employees on the y-axis, and the subsector (from the _snowflake_  dimension "Subsector") on the legend.
+3. Change the title of the first line chart to "Star schema". Change the title of the second line chart to "Snowflake schema".
+4. Open the _Performance analyzer_  and start recording to begin performance analysis. Refresh all visuals on the page. Do this several times to see if there is a consensus on whether the star or snowflake schema is faster in this case.
+5. Looks like there isn't a big difference in speed between both approaches for our relatively small dataset. Dig a level deeper and go take a look at what the drivers of performance are for each visual.
+6. **What takes the most amount of time for both visuals?**
+   - DAX query
+   - Visual display
+   - Other
