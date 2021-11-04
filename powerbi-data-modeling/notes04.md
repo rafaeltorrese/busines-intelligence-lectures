@@ -163,21 +163,44 @@ Welcome back! In this final demo, we'll use the performance analyzer again, and 
 <p>Let's compare which method leads to a better performance, <em>computed columns</em> created in Power Query or <em>calculated columns</em> created in DAX.</p></div>
 
 #### Instructions
-1.
-2.
-3.
-4.
-5.
-6.
-7.
+1. <div class=""><p>Open the Power BI Desktop file named <code>4_4_custom_columns.pbix</code>, from the Exercises folder on the desktop, and go to Power Query.</p></div>
+2. <div class=""><p>You'll use two different tables in this exercise. In one you'll compute a custom column in Power Query, and in the other table you'll use DAX to create a calculated column.</p>
+<ul>
+<li>Rename the <code>Summary Statistics for Manufacturing BIG</code> table to <code>Summary Statistics (computed column)</code>.</li>
+<li>Duplicate the table and name the new one <code>Summary Statistics (calculated column)</code>.</li>
+</ul></div>
+3. <div class=""><p>Go to <code>Summary Statistics (computed column)</code> and merge <code>GeographySummary</code>, <code>GeographyVariant</code>, and <code>GeographyNation</code> together into a column called <code>id</code>. Exit <em>Power Query</em>.</p></div>
+4. <div class=""><p>Add a new <strong>column</strong> in <code>Summary Statistics (calculated column)</code>. <code>CONCATENATE()</code> the <code>GeographySummary</code>, <code>GeographyVariant</code>, and <code>GeographyNation</code> columns and change the name to <code>id</code>. Note the <code>CONCATENATE()</code> function takes two arguments.</p></div>
+5. <div class=""><p>Navigate to the <em>Model</em> view and create a relationship from the <code>Geography</code> dimension to each of the Summary Statistics fact tables if it's not there yet.</p>
+<p><em>If for some reason the new table is not showing up in the Model view, you can manually add a relationship using the Manage relationships icon in the Home menu. Click "New…" and select the tables and columns where you want to define the relationship.</em></p></div>
+6. <div class=""><p>Return to the <em>Report</em> view and verify if the aggregation method of <code>Year</code> in both fact tables is set to "Don't summarize". Change if necessary.</p></div>
+7. <div class=""><p>Create two table visuals: </p>
+<ul>
+<li>The first table should include <code>Geographic Area Name</code>, <code>Year</code>, and <code>Number of employees</code>  from <code>Summary Statistics (computed column)</code>. </li>
+<li>The second table should include <code>Geographic Area Name</code>, <code>Year</code>, and <code>Number of employees</code>  from <code>Summary Statistics (calculated column)</code>. </li>
+</ul></div>
+8. <div class=""><p>Open the Performance Analyzer and refresh visuals two or three times.</p></div>
+9. **Did the table with a reference to a calculated column load faster, slower, or the same speed as the table whose geography ID was created in Power Query?**
+    - Faster
+    - Slower
+    - Same
 
 ### Exercise 04-03. 
 **An alternative to bi-directional filtering**
+<div class=""><p>For some use cases, you'll need to use a bi-directional filter. One example is a scenario where we want to show only values in a dimension slicer that are actually present in the fact table. It's important to know that bi-directional filtering can come with a cost. Luckily, there's an alternative in Power BI for this scenario that's more efficient.</p></div>
+
 #### Instructions
-1.
-2.
-3.
-4.
-5.
-6.
-7.
+
+1. <div class=""><p>Open the Power BI Desktop file named <code>4_5_bidirectional.pbix</code>, from the <code>Exercises</code> folder on the desktop.</p></div>
+2. <div class=""><p>Navigate to the <em>Model</em> view and note that there is a relationship between the <code>Summary Statistics</code> fact table and the <code>Year</code> and <code>Geography</code> dimensions.</p></div>
+3. <div class=""><ul>
+<li>Return to the <em>Report</em> view and add a new measure in <code>Summary Statistics</code> and call it <code>Slicer Summary Stats</code>. </li>
+<li>Your should use <code>INT()</code> wrapped around <code>NOT ISEMPTY()</code> to return <code>1</code> if there is a value present in the "Summary Statistics" fact table and <code>0</code> if there isn't.</li>
+</ul></div>
+4. <div class=""><ul>
+<li>Create a slicer on <code>Year</code> from the <code>Year</code> dimension. Change the slicer to display a list of values. </li>
+<li>Create another slicer on <code>Geographic Area Name</code> from the <code>Geography</code> dimension.</li>
+</ul></div>
+5. <div class=""><p>Add a <em>Card</em> visual with the <code>Number of employees</code> from the fact table.</p></div>
+6. <div class=""><p>Add a filter on each slicer that filters on rows where <code>Slicer Summary Stats</code> is equal to 1 (meaning that there are rows present in the fact table).</p></div>
+7. **How many years of data exists in the "Summary Statistics" fact?**
