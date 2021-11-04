@@ -107,7 +107,7 @@ The power of a date or time dimension is that you can extend the dimension by pe
 2. - In the _Report_ view, add a _Clustered column chart_ visual to the `Business Establishments` page.
    - The Values should be the maximum of `Number of firms` from the `Business Establishment by Age` table.
    - The _Axis_ should be `Decade` from the `Year` table.
-3. **What was the maximum amount of firms during the 1980s?**
+3. **What was the maximum amount of firms during the 1980s?** 291626
 
 ### Exercise 02-03.
 
