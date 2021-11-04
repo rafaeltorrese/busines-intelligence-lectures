@@ -93,7 +93,7 @@ DISTINCT ( // only keeps unique rows
     - Add a _Card_ visual, with _Fields_ set to `Number of firms` from the `Business Establishment by Age` table.
     - Add a `Year` filter (from the `Year` dimension) and set to 1983 only.
 
-6.  **How many manufacturing firms were there in 1983, according to the dataset? Answer in the form of ###K, where K represents thousands.**
+6.  **How many manufacturing firms were there in 1983, according to the dataset? Answer in the form of ###K, where K represents thousands.** 597k
 
 ### Exercise 02-02.
 
@@ -131,7 +131,7 @@ It seems that the database you usually extract data from has stopped providing y
 4. <div class=""><p>Add a relationship between the <code>Geography</code> dimension using the <code>id</code> column and the <code>Summary Statistics for Manufacturing</code> fact table.</p></div>
 
 5. **What cardinality did Power BI set between the 'Geography' dimension and the 'Summary Statistics for Manufacturing' table?**
-   - One-to-many
+   - One-to-many *
    - Many-to-one
    - Many-to-one
 
@@ -144,7 +144,9 @@ It seems that the database you usually extract data from has stopped providing y
 2. **Understanding granularity.**
    Granularity refers to the level at which data is stored with respect to dimensions. This is the minimum level of detail we can query--we can aggregate data to higher levels, but won't be able to break it down to lower levels. You can get a good understanding of the grain of data by listening for the word "by" when describing a table. You might define a table by customer, by product, by day, so the granularity is that each row represents the combination of one customer, one product, and one day. In the example here, the granularity is by ID, by NAICS code, by establishment age, by year. Note that fields like number of firms are not counted as part of the grain: number of firms are measured based on the combination of dimensions.
 
-NAICS: North American Industry Classification System 3. Handling granularity in Power BI
+NAICS: North American Industry Classification System 
+
+3. **Handling granularity in Power BI**
 If you have data at the annual level for example, there's no great way to break that data down by day. In some circumstances, you might use an allocation rule to spread values across the individual days, but those are estimations and introduce known inaccuracy to your data. By contrast, going from a finer grain to a coarser grain is easy to do with Power BI, by aggregating and grouping. In Power BI, you can specify aggregations and how to summarize data. Grouping is the more detailed process, allowing you to specify the grouping of columns as well as specific aggregations. Both methods have two key benefits. First, with fewer rows, we can get better query performance when displaying visuals. Second, by storing fewer rows, we reduce the amount of memory needed to store this data which can improve refresh time.
 
 4. **Measures.**
@@ -201,7 +203,7 @@ Hierarchies allow business users to drill down into categorical data on Power BI
    </ul></div>
 5. <div class=""><p>Add a <em>Slicer</em> for <code>Year</code> (from <code>Summary Statistics for Manufacturing</code>) and set to 2018.</p></div>
 6. <div class=""><p>Enable "Drill down" on the treemap by selecting the down arrow marked "Click to turn on Drill down." Try and click on a category on the treemap to drill into.</p></div>
-7. **How many employees were hired in manufacturing sector with 2017 NAICS Code "325510" in the year 2018?**
+7. **How many employees were hired in manufacturing sector with 2017 NAICS Code "325510" in the year 2018?** 35569
 
 ### Exercise 04-02.
 
@@ -224,7 +226,7 @@ Hierarchies allow business users to drill down into categorical data on Power BI
    </ul></div>
 5. **In which year in this dataset did the smallest average number of employees in the manufacturing sector occur?**
    - 2009
-   - 2010
+   - 2010 *
    - 2011
 
 ### Exercise 04-03.
@@ -246,4 +248,4 @@ Hierarchies allow business users to drill down into categorical data on Power BI
    <li>Create a new page called <code>Jobs</code>. </li>
    <li>Add a <em>Table</em> visual, with the following columns: <code>Geographic Area Name</code>, <code>Year</code>, <code>Employees per Firm</code>, and <code>Average Number of Employees by Age</code> from the <code>Business Establishment by Age</code> table.</li>
    </ul></div>
-4. Which state had the single smallest number of employees per firm in the dataset, over all years? What was the average number of employees by age for that state and year?
+4. Which state had the single smallest number of employees per firm in the dataset, over all years? Montana What was the average number of employees by age for that state and year? 2470
