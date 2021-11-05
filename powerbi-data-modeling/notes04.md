@@ -2,6 +2,47 @@
 
 ## Working with relationships.
 
+1. Working with relationships
+Welcome to this final chapter where we'll take a closer look at relationships. In this video, you'll learn more about cross filtering and role-playing dimensions.
+
+2. Cross filtering
+Cross-filtering is an important concept in Power BI. If you select a data point on one visual, the other visuals on the page change based on that selection.
+
+3. Filter direction
+In Power BI, each relationship must be defined with a cross filter direction. This determines the direction that filters will propagate. In this example, you can see that any column from the Geography dimension can filter the data in the Sales fact table. The same is true for the Clothing Item dimension. The filter direction usually goes from the one to the many, or from the dimension to the fact.
+
+4. Filter direction
+So let's see how that impacts the data. Imagine you want to slice the fact data on clothing item.
+
+5. Filter direction
+If you select Sweater, only the rows that hold sweater data will be selected in the fact table. Note that it's not possible to filter the dimension data based on any selections made in the fact table because of the way the filter direction was chosen.
+
+6. Filter direction options
+So single direction filters, like the one we've just seen, allow you to filter in one direction. Most frequently, we filter in a single direction. Sometimes, however, you want to filter in both directions. That's when you'll need a bi-directional filter. Let's look at a use case.
+
+7. Bi-directional filtering: use case
+Bi-directional relationships can deliver slicers that limit items to where data exists. Let's take the example from before. There are two single direction filters leading from the dimensions to the fact. Let's add two slicers, one on country from the Geography dimension and one on Product from the Clothing Item dimension. The Product slicer displays all options when Australia is selected.
+
+8. Bi-directional filtering: use case
+However, if we look at the fact table, we can see that only sweaters were sold in Australia. So it would make more sense if the Product slicer only showed the Sweater option.
+
+9. Bi-directional filtering: use case
+To achieve that, we have to add a bi-directional filter between Sales and Clothing Item. That way there is a direct filter path from Geography to Sales to Clothing Item.
+
+10. Bi-directional filtering and paths
+Bi-directional filters are allowed in Power BI, but you cannot combine them in such a way that they allow two separate paths to let one table filter another table. Here you can see a data model with two fact tables and three dimensions supporting those facts.
+
+11. Bi-directional filtering and paths
+By following the red arrows, you can see a path from Geography to NAICS Code. If we tried to change the relationship in purple to be bi-directional, we would open up a second path, indicated by the dark blue arrows. Power BI does not allow two separate paths from one table to another, so any attempt to change this highlighted relationship will result in an error message. So make sure to think carefully about where you need bi-directional filters!
+
+12. Role-playing dimensions
+Let's move on to another topic, role-playing dimensions. Sometimes, we need to create multiple relationships between tables. For example, this Recovery fact has three separate date keys, but we can only create a single active relationship between the Date dimension and the Recovery fact. The problem we face here is that if we want to filter by the submission month, for example, we cannot do this if our tie to the Date dimension is based on approval date.
+
+13. Role-playing dimensions
+The classical answer in the Kimball design is to create role-playing dimensions. A role-playing dimension is a table with multiple valid relationships between itself and another table. It's typically implemented in the database as a view, or copy, of the base dimension. Once the role-playing dimensional views are created, we can connect each view individually to its proper key in the Recovery fact, and now if we want to filter by submission month, we can easily do so.
+
+14. Role-playing dimensions in Power BI
+In Power BI this design is imitated by creating multiple relationships between two tables. First, inactive relationships are created from the Date dimension to the individual dates on the Recovery fact. Then, you can create DAX measures that specify which relationship to use. The USERELATIONSHIP() DAX function allows you to specify, just for the given measure, an inactive relationship to use in place of the active relationship. You'll see an example of this in the next video.
 ### Exercise 01-01. 
 **Bi-directional relationships**
 In most situations, using single direction cross filtering on your relationships is enough. There are, however, some cases where bi-directional filters are necessary. One example is showing only relevant slicer options to end users. Consider the following data model. The model diagram has been modified to reveal the table rows.
@@ -48,7 +89,7 @@ Change both to a list.</li>
 5. <div class=""><p>Let's fix that. Make the two relationships cross filter in both directions in the <em>Model</em> view.</p></div>
 6. <div class=""><p>Go back to the <em>Report</em> view, and note that the selected state now has removed the <code>Industry group</code> options. Deselect the state and select <code>Industry group</code> "3111".</p></div>
 7. **Which 'Geographic Area Name' is left when 'Industry group' "3111" is selected?**
-    - United States
+    - United States * 
     - All of the states
     - Alabama
 
@@ -74,7 +115,7 @@ You are asked to create a report where users can quickly compare the number of e
 <li>Create a new page and call it <code>Role Playing</code>. </li>
 <li>Add a <em>Scatter chart</em> visual whose <em>Details</em> is <code>SUBSECTOR</code> from <code>NAICS Code</code>, <em>X Axis</em> is <code>Number of employees</code>, and <em>Y Axis</em> is <code>Related Number of employees</code>, both from <code>Summary Statistics Double NAICS</code>.</li>
 </ul></div>
-6. **What is the SUBSECTOR with the highest total of Related Number of employees?**
+6. **What is the SUBSECTOR with the highest total of Related Number of employees?** 336
 
 ## Identifying performance problems
 
